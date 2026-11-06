@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>译览 YiLan · 浏览器翻译扩展</title>
+<meta name="description" content="译览是 Chrome 和 Edge 的翻译扩展：整页双语对照、划词翻译、框选翻译、滚动扫描、输入框翻译和术语表。免费，不用注册，自动跳过代码。">
+<meta property="og:title" content="译览 YiLan">
+<meta property="og:description" content="整页双语对照、划词、框选、滚动扫描、输入框翻译和术语表。免费，不用注册。">
+<meta property="og:image" content="assets/demos/selection.jpg">
+<link rel="icon" href="assets/logo.svg">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#"><img src="assets/logo.svg" alt="">译览</a>
+    <nav aria-label="页面导航">
+      <a href="#features">功能</a>
+      <a href="#install">安装</a>
+      <a href="#shortcuts">快捷键</a>
+      <a href="#settings">设置</a>
+      <a href="#faq">问题</a>
+    </nav>
+    <a class="button" href="#install">安装</a>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="wrap hero-grid">
+  <div class="hero-text">
+    <div class="stage" id="stage">
+      <p class="source" lang="en"><span id="sentence">Read the whole web in the language you think in.</span></p>
+      <svg class="ring" id="ring" aria-hidden="true"></svg>
+      <button class="ask" id="ask" type="button" tabindex="-1" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h8M8 3v2m2.5 0C9.6 9 7.5 11.6 4 13.5M6.5 8.5c1.2 2 3 3.6 5 4.5M13 21l4-9 4 9m-6.8-3h5.6"/></svg>
+        翻译
+      </button>
+      <h1 id="result"><span>用你思考的语言，读整个网页。</span></h1>
+    </div>
+    <p class="lead">译览是 Chrome 和 Edge 的翻译扩展。整页双语对照，选中一段就地翻译，框出一块区域看译文，在输入框里写完中文连按三下空格换成英文。代码原样保留，页面不会被弄乱。</p>
+    <div class="actions">
+      <a class="button" data-store hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        添加到 Chrome
+      </a>
+      <a class="button" href="download/yilan.zip" download data-store-pending>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19h14"/></svg>
+        下载安装包
+      </a>
+      <span class="soon" data-store-pending>Chrome 应用商店即将上架</span>
+      <a class="more" href="#install" data-store hidden>其他安装方式</a>
+    </div>
+    <p class="meta"><span>Chrome 和 Edge 111 以上</span><span>免费，不用注册</span><span>界面支持 8 种语言</span></p>
+  </div>
+
+    <figure class="demo glint">
+      <button type="button" data-zoom aria-label="放大查看">
+        <picture>
+          <source srcset="assets/demos/page.jpg" media="(prefers-reduced-motion: reduce)">
+          <img src="assets/demos/page.webp" alt="按下快捷键后，每段英文下方出现高亮的中文译文" width="1000" height="618">
+        </picture>
+      </button>
+    </figure>
+  </div>
+</section>
+
+<div class="ribbon" aria-hidden="true">
+  <div class="ribbon-track" id="ribbon"></div>
+</div>
+
+<section class="chapter" id="features">
+  <div class="wrap">
+    <h2>功能</h2>
+    <p class="intro">每段动图都是装好扩展后的真实操作，点一下可以放大。</p>
+
+    <div class="manual">
+      <nav class="index" aria-label="功能目录">
+        <a href="#page">整页翻译</a>
+        <a href="#selection">划词翻译</a>
+        <a href="#parts">一次选几段</a>
+        <a href="#marquee">框选翻译</a>
+        <a href="#scan">滚动扫描</a>
+        <a href="#input">输入框翻译</a>
+        <a href="#glossary">术语表</a>
+        <a href="#unlock">解除复制限制</a>
+        <a href="#popup">工具栏弹窗</a>
+      </nav>
+
+      <div>
+        <article class="feature" id="page">
+          <div class="head"><h3>整页翻译</h3><span class="keys"><kbd>Alt</kbd> <kbd>Shift</kbd> <kbd>Y</kbd></span></div>
+          <p class="desc">把整个网页翻译成你的语言。默认双语对照，译文以高亮样式排在每段原文下方；也可以直接替换原文，鼠标停在译文上时显示原文。</p>
+          <p class="how">按 <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>Y</kbd> 开始翻译，再按一次显示原文。按 <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd> 在双语对照和替换原文之间切换，不会重新请求。不想记快捷键，就点工具栏上的译览图标，再点「翻译此页面」。</p>
+          <ul class="fine">
+            <li>只翻译屏幕附近的内容，往下滚动时接着翻，页面内容更新了也会跟上。</li>
+            <li>代码块、编辑器、终端和公式不翻译，句子里的行内代码原样保留。</li>
+            <li>同一个标签页里，接着打开同一网站的其他页面会继续翻译。网站可以在弹窗里设成「总是」或「不翻译」。</li>
+          </ul>
+          <figure class="demo">
+            <button type="button" data-zoom aria-label="放大查看">
+              <picture>
+                <source srcset="assets/demos/page.jpg" media="(prefers-reduced-motion: reduce)">
+                <img src="assets/demos/page.webp" alt="按下快捷键后，每段英文下方出现高亮的中文译文；再切换成替换原文" width="1000" height="618" loading="lazy">
+              </picture>
+            </button>
+            <figcaption>翻译整页，往下滚动，切换成替换原文后再切回来。</figcaption>
+          </figure>
+        </article>
+
+        <article class="feature" id="selection">
+          <div class="head"><h3>划词翻译</h3><span class="keys">选中文字</span></div>
+          <p class="desc">选中文字后，一个手绘的圈把它圈起来，尖角指向「翻译」按钮。点一下，译文卡片就出现在尖角的位置。翻译中圈是点线，有了结果变成实线。</p>
+          <p class="how">卡片挡住了原文，就拖着顶部的横条把它移开。卡片上可以复制、朗读译文；选的是单词或短语时，还可以加入术语表。</p>
+          <ul class="fine">
+            <li>想更快，可以在设置里把「选中文字后」改成「直接翻译」；不想看到按钮就改成「关闭」，需要时用右键菜单翻译。</li>
+            <li>在代码块和输入框里选中文字，不会出现按钮。</li>
+          </ul>
+          <figure class="demo">
+            <button type="button" data-zoom aria-label="放大查看">
+              <picture>
+                <source srcset="assets/demos/selection.jpg" media="(prefers-reduced-motion: reduce)">
+                <img src="assets/demos/selection.webp" alt="选中一段文字后出现手绘圈和翻译按钮，点击后显示译文卡片，再拖动卡片" width="1000" height="618" loading="lazy">
+              </picture>
+            </button>
+            <figcaption>选中、翻译，再拖着卡片顶部的横条把它移开。</figcaption>
+          </figure>
+        </article>
+
+        <article class="feature" id="parts">
+          <div class="head"><h3>一次选几段</h3><span class="keys">选中跨段的文字</span></div>
+          <p class="desc">选中好几个段落时，它们放在同一张卡片里，按段分开。点卡片里的某一段，页面滚到对应的原文并闪一下，方便对照着读。</p>
+          <ul class="fine">
+            <li>选区在页面上的同一处时，一个圈把它们一起圈住。</li>
+            <li>选区散在页面不同位置时（比如跨过侧边栏）不画圈，按钮出现在鼠标旁边。</li>
+          </ul>
+          <figure class="demo">
+            <button type="button" data-zoom aria-label="放大查看">
+              <picture>
+                <source srcset="assets/demos/parts.jpg" media="(prefers-reduced-motion: reduce)">
+                <img src="assets/demos/parts.webp" alt="选中两段文字翻译，卡片里分成两段，点击第二段定位到原文" width="1000" height="618" loading="lazy">
+              </picture>
+            </button>
+            <figcaption>两段一起翻译，点第二段定位回原文。</figcaption>
+          </figure>
+        </article>
+
+        <article class="feature" id="marquee">
+          <div class="head"><h3>框选翻译</h3><span class="keys"><kbd>Shift</kbd> <kbd>空格</kbd> <kbd>S</kbd></span></div>
+          <p class="desc">只想看懂页面上的一块，就拖一个框把它框住。译文直接盖在原文上，页面本身一点不改。表格、卡片、弹窗这些不好选中的地方最适合。</p>
+          <p class="how">按住 <kbd>Shift</kbd> 和 <kbd>空格</kbd>，再按 <kbd>S</kbd>，然后拖动鼠标框出区域。按 <kbd>Esc</kbd> 关闭，或者直接框下一块。弹窗和右键菜单里也有「框选翻译」。</p>
+          <ul class="fine">
+            <li>部分中文输入法用 <kbd>Shift</kbd> + <kbd>空格</kbd> 切换全角半角，可能同时被触发。可以在设置里换一个组合键。</li>
+          </ul>
+          <figure class="demo">
+            <button type="button" data-zoom aria-label="放大查看">
+              <picture>
+                <source srcset="assets/demos/marquee.jpg" media="(prefers-reduced-motion: reduce)">
+                <img src="assets/demos/marquee.webp" alt="框住标题、段落和代码块，框内的文字被中文覆盖，代码保持不变" width="1000" height="618" loading="lazy">
+              </picture>
+            </button>
+            <figcaption>框住标题、段落和代码。代码不翻译。</figcaption>
+          </figure>
+        </article>
+
+        <article class="feature" id="scan">
+          <div class="head"><h3>滚动扫描</h3><span class="keys"><kbd>Shift</kbd> <kbd>空格</kbd> <kbd>X</kbd></span></div>
+          <p class="desc">框出屏幕上正文所在的一块，然后像平常一样往下滚。经过这个框的内容都会被翻译，收进一张结果卡片，标题、列表和代码块都保留原来的样子。读长文章和长文档时最省事。</p>
+          <p class="how">按住 <kbd>Shift</kbd> 和 <kbd>空格</kbd>，再按 <kbd>X</kbd>，框出区域后开始滚动。点工具条上的「全屏查看」读结果，按 <kbd>Esc</kbd> 结束。</p>
+          <ul class="fine">
+            <li>结果可以搜索，可以复制为 Markdown，也可以保存或复制成图片。图片带彩色边框，底部有扩展名水印。</li>
+            <li>页面固定的导航栏和侧边栏不会被扫进去，来回滚动也不会重复。</li>
+          </ul>
+          <figure class="demo">
+            <button type="button" data-zoom aria-label="放大查看">
+              <picture>
+                <source srcset="assets/demos/scan.jpg" media="(prefers-reduced-motion: reduce)">
+                <img src="assets/demos/scan.webp" alt="框出屏幕中间的区域后向下滚动，再全屏查看翻译好的整篇内容" width="1000" height="618" loading="lazy">
+              </picture>
+            </button>
+            <figcaption>框住正文，往下滚，再全屏读整理好的译文。</figcaption>
+          </figure>
+        </article>
+
+        <article class="feature" id="input">
+          <div class="head"><h3>输入框翻译</h3><span class="keys"><kbd>空格</kbd> × 3</span></div>
+          <p class="desc">在网页的输入框里用中文写完，连按三下空格，上方弹出译文预览，按回车就换成译文。回英文邮件、评论和工单时用得上。</p>
+          <p class="how">先在设置的「输入框翻译」里打开开关，选好要翻译成的语言（默认英语）。按 <kbd>Enter</kbd> 替换，按 <kbd>Esc</kbd> 取消，替换后按 <kbd>Ctrl</kbd> + <kbd>Z</kbd> 能撤销。预览左下角可以临时换一种语言，也可以只复制译文。</p>
+          <dl class="scope">
+            <div><dt>光标停在某一行</dt><dd>只翻译这一行</dd></div>
+            <div><dt>选中了一部分文字</dt><dd>只翻译选中的</dd></div>
+            <div><dt>换行后在空行上按</dt><dd>翻译整个输入框</dd></div>
+          </dl>
+          <ul class="fine">
+            <li>只翻译了一部分时，预览里可以在「本段」和「全部」之间切换。</li>
+            <li>密码框永远不会被读取。</li>
+          </ul>
+          <figure class="demo">
+            <button type="button" data-zoom aria-label="放大查看">
+              <picture>
+                <source srcset="assets/demos/input.jpg" media="(prefers-reduced-motion: reduce)">
+                <img src="assets/demos/input.webp" alt="在评论框里写中文，连按三下空格出现英文预览，回车后替换；第二行只替换这一行" width="1000" height="618" loading="lazy">
+              </picture>
+            </button>
+            <figcaption>第一行写完换成英文；第二行再按，只翻译第二行。</figcaption>
+          </figure>
+        </article>
+
+        <article class="feature" id="glossary">
+          <div class="head"><h3>术语表</h3><span class="keys">卡片上「加入术语表」</span></div>
+          <p class="desc">机器翻译常把专有名词译歪，比如把消息队列里的 broker 译成“经纪人”。把它加进术语表，以后都按你定的译法翻译；只写原词不写译法，就保持原样不翻。</p>
+          <p class="how">双击或选中一个词，翻译后点卡片上的「加入术语表」，填好译法保存。整页翻译、划词、框选和输入框翻译都会遵守它。也可以在设置的「规则 → 术语表」里直接写，每行一条：<code>原词</code> 或 <code>原词 = 译法</code>。</p>
+          <ul class="fine">
+            <li>写了译法的条目，只在翻译成添加时的目标语言时使用。</li>
+          </ul>
+          <figure class="demo">
+            <button type="button" data-zoom aria-label="放大查看">
+              <picture>
+                <source srcset="assets/demos/glossary.jpg" media="(prefers-reduced-motion: reduce)">
+                <img src="assets/demos/glossary.webp" alt="把 broker 加入术语表并设为消息代理，再翻译整段时译文里用的是消息代理" width="1000" height="618" loading="lazy">
+              </picture>
+            </button>
+            <figcaption>broker 原本译成“经纪人”，加入术语表后成了“消息代理”。</figcaption>
+          </figure>
+        </article>
+
+        <article class="feature" id="unlock">
+          <div class="head"><h3>解除复制限制</h3><span class="keys">设置里打开</span></div>
+          <p class="desc">有些网站禁止选中、复制或右键。打开这个设置后，这些限制都会失效：可以正常选中和复制，也能划词翻译。</p>
+          <p class="how">在设置的「划词翻译」里打开「解除复制限制」，然后刷新受限的页面。默认是关闭的；少数网页开启后可能表现不同，遇到问题关掉就好。</p>
+          <figure class="demo">
+            <button type="button" data-zoom aria-label="放大查看">
+              <picture>
+                <source srcset="assets/demos/unlock.jpg" media="(prefers-reduced-motion: reduce)">
+                <img src="assets/demos/unlock.webp" alt="受限的文字一开始选不中，打开设置后可以选中并翻译" width="1000" height="618" loading="lazy">
+              </picture>
+            </button>
+            <figcaption>先试一次，选不中；打开设置刷新后，选中并翻译。</figcaption>
+          </figure>
+        </article>
+
+        <article class="feature" id="popup">
+          <div class="side-by-side">
+            <div>
+              <div class="head"><h3>工具栏弹窗</h3><span class="keys">点工具栏图标</span></div>
+              <p class="desc">点浏览器工具栏上的译览图标，打开弹窗。它有三个部分。</p>
+              <dl class="scope">
+                <div><dt>网页翻译</dt><dd>选原文和目标语言，切换双语对照或替换原文，设置这个网站是否自动翻译，开始框选或扫描。</dd></div>
+                <div><dt>文本翻译</dt><dd>粘贴或输入任意文字直接翻译，最近的翻译会留着。</dd></div>
+                <div><dt>设置</dt><dd>右上角的按钮。外观、主题色、译文样式、划词、输入框、规则、快捷键和缓存都在这里，改完马上生效。</dd></div>
+              </dl>
+              <ul class="fine">
+                <li>主题色有 8 种，也能自定义，扩展里所有强调色都跟着变。</li>
+                <li>设置最下面有「恢复默认设置」。</li>
+              </ul>
+            </div>
+            <figure class="demo" style="--ratio: 360 / 520">
+              <button type="button" data-zoom aria-label="放大查看">
+                <picture>
+                  <source srcset="assets/demos/popup.jpg" media="(prefers-reduced-motion: reduce)">
+                  <img src="assets/demos/popup.webp" alt="在弹窗的文本翻译里输入英文得到中文，再打开设置切换主题色" width="720" height="1040" loading="lazy">
+                </picture>
+              </button>
+              <figcaption>文本翻译，再到设置里换主题色。</figcaption>
+            </figure>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter tint" id="install">
+  <div class="wrap">
+    <h2>安装</h2>
+    <p class="intro">两种方式任选一种。从应用商店安装会自动更新。</p>
+    <div class="ways">
+      <div class="way">
+        <h3>从 Chrome 应用商店安装</h3>
+        <ol class="install">
+          <li><span>打开译览在 Chrome 应用商店的页面。</span></li>
+          <li><span>点「添加至 Chrome」，在弹出的确认框里点「添加扩展程序」。</span></li>
+          <li><span>点工具栏上的拼图图标，把译览固定到工具栏。</span></li>
+        </ol>
+        <p class="install-after">用 Edge 也可以从 Chrome 应用商店安装：第一次打开商店页面时，点页面顶部的「允许来自其他应用商店的扩展」，再点「获取」。</p>
+        <p class="way-action"><a class="button" data-store hidden>前往 Chrome 应用商店</a><span class="soon" data-store-pending>即将上架，上架后这里会放上链接</span></p>
+      </div>
+      <div class="way">
+        <h3>用安装包手动安装</h3>
+        <ol class="install">
+          <li><span><a href="download/yilan.zip" download>下载安装包</a>，解压到一个不会被删掉的文件夹。</span></li>
+          <li><span>在地址栏打开 <code>chrome://extensions</code>，Edge 是 <code>edge://extensions</code>。</span></li>
+          <li><span>打开「开发者模式」。Chrome 在右上角，Edge 在左侧。</span></li>
+          <li><span>点「加载已解压的扩展程序」，选择刚才解压的文件夹。</span></li>
+          <li><span>点工具栏上的拼图图标，把译览固定到工具栏。</span></li>
+        </ol>
+        <p class="install-after">手动安装不会自动更新。有新版本时，下载后覆盖原来的文件夹，在扩展页面点译览上的刷新按钮。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" id="shortcuts">
+  <div class="wrap">
+    <h2>快捷键</h2>
+    <p class="intro">都可以在「设置 → 快捷键」里改：点一下，按下新的组合。快捷键只在网页里生效，在输入框里打字不会误触。</p>
+    <dl class="rows">
+      <div><dt>翻译页面 / 显示原文</dt><dd><kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>Y</kbd></dd></div>
+      <div><dt>双语对照 / 替换原文</dt><dd><kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd></dd></div>
+      <div><dt>框选翻译<small>按住前两个键，再按 S</small></dt><dd><kbd>Shift</kbd> + <kbd>空格</kbd> + <kbd>S</kbd></dd></div>
+      <div><dt>滚动扫描<small>按住前两个键，再按 X</small></dt><dd><kbd>Shift</kbd> + <kbd>空格</kbd> + <kbd>X</kbd></dd></div>
+      <div><dt>输入框翻译<small>在输入框里快速连按，需要先在设置里打开</small></dt><dd><kbd>空格</kbd> × 3</dd></div>
+      <div><dt>关闭框选、扫描、卡片和预览</dt><dd><kbd>Esc</kbd></dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="chapter tint" id="settings">
+  <div class="wrap">
+    <h2>设置</h2>
+    <p class="intro">在弹窗右上角打开。改完马上生效，设置随浏览器账号同步。</p>
+    <div class="groups">
+      <div class="group">
+        <h3>显示</h3>
+        <dl>
+          <div><dt>外观</dt><dd>跟随系统、浅色或深色。</dd></div>
+          <div><dt>主题色</dt><dd>8 种预设，也可以自定义，看不清时自动调整明暗。默认蓝色。</dd></div>
+          <div><dt>译文样式</dt><dd>彩色文字、同原文、淡色、虚线、竖线、高亮。默认高亮。</dd></div>
+          <div><dt>译文字号</dt><dd>相对原文放大或缩小。</dd></div>
+          <div><dt>悬停显示原文</dt><dd>替换模式下，鼠标停在译文上时显示原文。</dd></div>
+        </dl>
+        <h3>划词与输入框</h3>
+        <dl>
+          <div><dt>选中文字后</dt><dd>显示按钮、直接翻译或关闭。关闭后仍可以用右键菜单。</dd></div>
+          <div><dt>解除复制限制</dt><dd>在禁止选择、复制或右键的网站上也能选中和复制。默认关闭。</dd></div>
+          <div><dt>连按三下空格翻译输入框</dt><dd>默认关闭，打开后才会读取输入框。</dd></div>
+          <div><dt>翻译成</dt><dd>输入框翻译的目标语言，默认英语。</dd></div>
+        </dl>
+      </div>
+      <div class="group">
+        <h3>规则</h3>
+        <dl>
+          <div><dt>术语表</dt><dd>每行一条：<code>原词</code> 保持原样，<code>原词 = 译法</code> 固定译法。</dd></div>
+          <div><dt>总是翻译的网站</dt><dd>每行一个域名，包含子域名，打开时自动翻译。</dd></div>
+          <div><dt>停用的网站</dt><dd>不自动翻译，也不显示划词按钮。</dd></div>
+          <div><dt>总是翻译的语言</dt><dd>语言代码，用逗号分隔，比如 <code>en, ja</code>。</dd></div>
+          <div><dt>不翻译的元素</dt><dd>CSS 选择器，每行一个。代码块、编辑器和公式已经默认跳过。</dd></div>
+        </dl>
+        <h3>快捷键与缓存</h3>
+        <dl>
+          <div><dt>快捷键</dt><dd>修改四个组合键，可以恢复默认。</dd></div>
+          <div><dt>记住翻译过的内容</dt><dd>不保存，或保存 7、15、30 天。译文存在你自己的电脑上，同样的句子不用再联网。无痕窗口不保存。</dd></div>
+          <div><dt>恢复默认设置</dt><dd>语言、主题色、外观、快捷键和规则恢复默认，最近翻译不受影响。</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" id="faq">
+  <div class="wrap">
+    <h2>问题</h2>
+    <div class="qa">
+      <div>
+        <h3>为什么在起始页和设置页上用不了？</h3>
+        <p>浏览器不允许任何扩展在它自己的页面上运行，包括新标签页、<code>chrome://</code> 和 <code>edge://</code> 开头的页面，以及扩展商店。在这些页面上，可以改用弹窗里的文本翻译。</p>
+      </div>
+      <div>
+        <h3>要钱吗？要注册或者密钥吗？</h3>
+        <p>都不用。扩展使用免费的在线翻译服务，装好就能用。</p>
+      </div>
+      <div>
+        <h3>我的文字会被发到哪里？</h3>
+        <p>要翻译的文字会发到在线翻译服务生成译文。服务方没有说明如何保存这些数据，不要用它翻译敏感内容。译览没有自己的服务器，也不收集统计数据。文字只在你操作时发送，例外是你开启的自动翻译和网站规则。输入框只有在你打开输入框翻译、并在里面连按三下空格时才会被读取，密码框永远不会。</p>
+      </div>
+      <div>
+        <h3>会把网页弄坏吗？</h3>
+        <p>不会删除或移动网页上的任何元素，React、Vue 这些框架做的页面照常能更新和点击。显示原文后，页面恢复成翻译前的样子。框选翻译只是在页面上面叠一层，完全不碰页面本身。</p>
+      </div>
+      <div>
+        <h3>哪些内容翻译不了？</h3>
+        <p>图片和 Canvas 里的文字、浏览器自带 PDF 阅读器里的内容。单个词缺少上下文时可能译错，可以用术语表固定。机器翻译会调整语序，链接偶尔会落到相邻的词上，但文字和代码不会丢。</p>
+      </div>
+      <div>
+        <h3>按 Shift + 空格时输入法切成了全角？</h3>
+        <p>部分中文输入法用这个组合切换全角半角。可以在输入法里关掉它，或者在「设置 → 快捷键」里把框选和扫描换成别的组合。</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>译览 YiLan</span>
+    <a href="privacy.html">隐私权政策</a>
+  </div>
+</footer>
+
+<dialog class="viewer" id="viewer" aria-label="放大的动图"><img alt=""></dialog>
+<script src="assets/app.js"></script>
+</body>
+</html>
